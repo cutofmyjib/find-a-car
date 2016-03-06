@@ -4,7 +4,11 @@ export default class CityForm extends Component {
   render() {
     return (
       <div>
-        <p>City Search form here</p>
+        <form className="ui form">
+          <div className="field">
+            <input type="text" name="city" placeholder="City" />
+          </div>
+        </form>
       </div>
     );
   }
