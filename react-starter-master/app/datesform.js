@@ -3,32 +3,12 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import moment from 'moment'
 
 export default class DatesForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { from: null, to: null }
-  }
-
-  handleDayClick(e, day) {
-    const range = DateUtils.addDayToRange(day, this.state);
-    this.setState(range);
-
-  }
-
-  handleResetClick(e) {
-    e.preventDefault();
-    this.setState({
-      from: null,
-      to: null
-    })
-  }
-
   render() {
-    console.log(this.state)
-    const { from, to } = this.state;
+    const { from, to } = this.props;
 
     const modifiers = {
       disabled: DateUtils.isPastDay,
-      selected: day => DateUtils.isDayInRange(day, this.state)
+      selected: day => DateUtils.isDayInRange(day, this.props)
     };
 
     return (
@@ -39,14 +19,14 @@ export default class DatesForm extends Component {
             <p>You chose from {
                 moment(from).format("L") } to {
                 moment(to).format("L") }. <a
-                href="#" onClick={ this.handleResetClick.bind(this) }>Reset</a>
+                href="#" onClick={this.props.handleResetClick}>Reset</a>
             </p>
         }
         <DayPicker
           ref="daypicker"
           numberOfMonths={ 2 }
           modifiers={ modifiers }
-          onDayClick={ this.handleDayClick.bind(this) }
+          onDayClick={this.props.handleDayClick}
         />
       </div>
     );
