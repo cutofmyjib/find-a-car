@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
-import moment from 'moment'
+import moment from 'moment';
 
 export default class DatesForm extends Component {
   render() {
