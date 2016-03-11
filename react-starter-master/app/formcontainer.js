@@ -30,11 +30,13 @@ export default class FormContainer extends Component {
   }
 
   searchCar(e) {
+    var base = 'http://api.hotwire.com/v1/search/car?apikey=83thkexwq5fzm59pt7kgj35y&dest=';
     var from = moment(this.state.from).format("L");
     var to = moment(this.state.to).format("L");
     var city = this.state.city;
+
     $.ajax({
-      url: 'http://api.hotwire.com/v1/search/car?apikey=83thkexwq5fzm59pt7kgj35y&dest='+city+'&startdate='+from+'&enddate='+to+'&pickuptime=10:00&dropofftime=13:30&format=jsonp',
+      url: base+city+'&startdate='+from+'&enddate='+to+'&pickuptime=10:00&dropofftime=13:30&format=jsonp',
       dataType: 'jsonp',
       crossDomain: true,
       success: function(data) {
@@ -45,13 +47,9 @@ export default class FormContainer extends Component {
         console.error('hotwire endpoint', status, err.toString())
       }.bind(this)
     })
-    //using input city and dates - call the hotwire api get endpoint
-    // to find cars avail.
-    console.log('you searched for ' + city)
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="main">
         <CityForm onChange={this.getString.bind(this)} />
