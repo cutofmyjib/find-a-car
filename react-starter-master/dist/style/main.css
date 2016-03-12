@@ -181,7 +181,13 @@ header {
     align-items: center;
 }
 
+.calendar {
+    display: none;
+}
 
+.calendar.show {
+    display: block;
+}
 
 
 
