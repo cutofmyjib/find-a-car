@@ -31,7 +31,7 @@ export default class DatesForm extends Component {
       <div className="two fields">
         <div className="field">
           <label>{this.props.label}</label>
-          <input type="text" name="city" value={date ? moment(date).format("L") : 'date'} onClick={this.handleClick.bind(this)} onChange={this.handleClick.bind(this)}/>
+          <input type="text" name="city" value={ date ? moment(date).format("L") : 'select date' } onClick={this.handleClick.bind(this)} onChange={this.handleClick.bind(this)}/>
           <span className={"calendar " + (this.state.calendarOpen ? "show" : "")}>
             <DayPicker
               ref="daypicker"
