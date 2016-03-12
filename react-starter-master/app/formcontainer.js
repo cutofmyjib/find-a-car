@@ -16,17 +16,31 @@ export default class FormContainer extends Component {
     this.setState({ city: cityStr })
   }
 
-  handleDayClick(e, day) {
-    const range = DateUtils.addDayToRange(day, this.state);
-    this.setState(range);
+  handleFromClick(e, day, modifiers) {
+    this.setState({
+      from: modifiers.indexOf('selected') > -1 ? null : day
+    });
   }
 
-  handleResetClick(e) {
-    e.preventDefault();
+  handleToClick(e, day, modifiers) {
     this.setState({
-      from: null,
-      to: null
-    })
+      to: modifiers.indexOf('selected') > -1 ? null : day
+    });
+  }
+
+  //isPastDay(d: date) -> bool (from DateUtils)
+  calculateDisabledFrom(day) {
+    if (this.state.to) {
+      return day >= this.state.to || DateUtils.isPastDay(day);
+    }
+    return DateUtils.isPastDay(day);
+  }
+
+  calculateDisabledTo(day) {
+    if (this.state.from) {
+      return day <= this.state.from;
+    }
+    return DateUtils.isPastDay(day);
   }
 
   searchCar(e) {
@@ -50,14 +64,22 @@ export default class FormContainer extends Component {
   }
 
   render() {
+    console.log(this.state)
+    console.log(this.state.data)
     return (
       <div className="main">
-        <CityForm onChange={this.getString.bind(this)} />
-        <DatesForm  handleDayClick={this.handleDayClick.bind(this)}
-                    handleResetClick={this.handleResetClick.bind(this)}
-                    from={this.state.from}
-                    to={this.state.to}  />
-        <button onClick={this.searchCar.bind(this)}>submit</button>
+        <div className="ui form">
+          <CityForm onChange={this.getString.bind(this)} />
+          <DatesForm  handleDayClick={this.handleFromClick.bind(this)}
+                      label='from'
+                      date={ this.state.from }
+                      disabled={ this.calculateDisabledFrom.bind(this) } />
+          <DatesForm  handleDayClick={this.handleToClick.bind(this)}
+                      label='to'
+                      date={this.state.to}
+                      disabled={this.calculateDisabledTo.bind(this)}/>
+          <button onClick={this.searchCar.bind(this)}>submit</button>
+        </div>
       </div>
     );
   }
