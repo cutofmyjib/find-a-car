@@ -28,21 +28,28 @@ export default class DatesForm extends Component {
     };
 
     return (
-      <div className="ui form">
-        <div className="two fields">
-          <div className="field">
-              <label>{this.props.label}</label>
-              <input type="text" name="city" value={date ? moment(date).format("L") : 'date'} onClick={this.handleClick.bind(this)} />
-          </div>
+      <div className="two fields">
+        <div className="field">
+          <label>{this.props.label}</label>
+          <input type="text" name="city" value={date ? moment(date).format("L") : 'date'} onClick={this.handleClick.bind(this)} onChange={this.handleClick.bind(this)}/>
+          <span className={"calendar " + (this.state.calendarOpen ? "show" : "")}>
+            <DayPicker
+              ref="daypicker"
+              numberOfMonths={ 1 }
+              modifiers={ modifiers }
+              onDayClick={this.handleDayClick.bind(this)}
+            />
+          </span>
         </div>
-        <span className={"calendar " + (this.state.calendarOpen ? "show" : "")}>
-          <DayPicker
-            ref="daypicker"
-            numberOfMonths={ 1 }
-            modifiers={ modifiers }
-            onDayClick={this.handleDayClick.bind(this)}
-          />
-        </span>
+        <div className="field">
+          <label>{this.props.timelabel}</label>
+          <div className="ui selection dropdown">
+            <input type="hidden" name="time" />
+            <div className="default text">From time</div>
+            <div className="menu">
+            </div>
+          </div>
+          </div>
       </div>
     );
   }
