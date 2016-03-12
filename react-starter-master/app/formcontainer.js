@@ -64,8 +64,6 @@ export default class FormContainer extends Component {
   }
 
   render() {
-    console.log(this.state)
-    console.log(this.state.data)
     return (
       <div className="main">
         <div className="ui form">
@@ -80,8 +78,8 @@ export default class FormContainer extends Component {
                       timelabel='Drop Off Time'
                       date={this.state.to}
                       disabled={this.calculateDisabledTo.bind(this)}/>
-          <button onClick={this.searchCar.bind(this)}>submit</button>
         </div>
+        <button className="ui primary button" onClick={this.searchCar.bind(this)}>Search</button>
       </div>
     );
   }
