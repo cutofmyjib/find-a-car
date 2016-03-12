@@ -71,11 +71,13 @@ export default class FormContainer extends Component {
         <div className="ui form">
           <CityForm onChange={this.getString.bind(this)} />
           <DatesForm  handleDayClick={this.handleFromClick.bind(this)}
-                      label='from'
+                      label='Pick Up Date'
+                      timelabel='Pick Up Time'
                       date={ this.state.from }
                       disabled={ this.calculateDisabledFrom.bind(this) } />
           <DatesForm  handleDayClick={this.handleToClick.bind(this)}
-                      label='to'
+                      label='Drop Off Date'
+                      timelabel='Drop Off Time'
                       date={this.state.to}
                       disabled={this.calculateDisabledTo.bind(this)}/>
           <button onClick={this.searchCar.bind(this)}>submit</button>
