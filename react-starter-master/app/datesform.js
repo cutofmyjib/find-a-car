@@ -3,31 +3,46 @@ import DayPicker, { DateUtils } from 'react-day-picker';
 import moment from 'moment';
 
 export default class DatesForm extends Component {
+   constructor(props) {
+    super(props)
+    this.state = { calendarOpen: false }
+  }
+
+  handleClick() {
+    this.setState({ calendarOpen: !this.state.calendarOpen })
+    console.log(this.state.calendarOpen)
+  }
+
+  handleDayClick(e, day, modifiers) {
+    this.setState({ calendarOpen: false })
+    //call function in parent component
+    this.props.handleDayClick(e, day, modifiers)
+  }
+
   render() {
-    const { from, to } = this.props;
+    const { date } = this.props;
 
     const modifiers = {
-      disabled: DateUtils.isPastDay,
-      selected: day => DateUtils.isDayInRange(day, this.props)
+      disabled: this.props.disabled,
+      selected: day => DateUtils.isSameDay(day, this.props.date)
     };
 
     return (
-      <div className="RangeExample">
-        { !from && !to && <p>Please select the <strong>first day</strong>.</p> }
-          { from && !to && <p>Please select the <strong>last day</strong>.</p> }
-          { from && to &&
-            <p>You chose from {
-                moment(from).format("L") } to {
-                moment(to).format("L") }. <a
-                href="#" onClick={this.props.handleResetClick}>Reset</a>
-            </p>
-        }
-        <DayPicker
-          ref="daypicker"
-          numberOfMonths={ 2 }
-          modifiers={ modifiers }
-          onDayClick={this.props.handleDayClick}
-        />
+      <div className="ui form">
+        <div className="two fields">
+          <div className="field">
+              <label>{this.props.label}</label>
+              <input type="text" name="city" value={date ? moment(date).format("L") : 'date'} onClick={this.handleClick.bind(this)} />
+          </div>
+        </div>
+        <span className={"calendar " + (this.state.calendarOpen ? "show" : "")}>
+          <DayPicker
+            ref="daypicker"
+            numberOfMonths={ 1 }
+            modifiers={ modifiers }
+            onDayClick={this.handleDayClick.bind(this)}
+          />
+        </span>
       </div>
     );
   }
