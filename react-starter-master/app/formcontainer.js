@@ -95,7 +95,7 @@ export default class FormContainer extends Component {
                       time={ this.state.dropOffTime }
                       onChange={ this.setDropOffTime.bind(this) } />
         </div>
-        <button className="ui primary button" onClick={this.searchCar.bind(this)}>Search</button>
+        <button className="ui primary button custom-color1" onClick={ this.searchCar.bind(this) }>Search</button>
       </div>
     );
   }

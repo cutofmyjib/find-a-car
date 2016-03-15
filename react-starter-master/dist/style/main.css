@@ -99,3 +99,14 @@ header {
 .calendar.show {
     display: block;
 }
+
+.ui.primary.button.custom-color1 {
+    color: #4dd080;
+    background: #fff;
+    border: 2px solid #4dd080;
+}
+
+.ui.primary.button.custom-color1:hover {
+    color: #fff;
+    background: #4dd080;
+}
