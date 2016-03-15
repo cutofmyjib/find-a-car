@@ -1,4 +1,12 @@
+!node_modules/
+
 node_modules/*
+!node_modules/react-kronos/
+
+node_modules/react-kronos/*
+!node_modules/react-kronos/lib/
+
+node_modules/react-kronos/lib/*
 !node_modules/react-kronos/lib/styles.js
 
 dist/index.html
