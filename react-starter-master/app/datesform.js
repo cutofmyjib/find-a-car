@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
-import DayPicker, { DateUtils } from 'react-day-picker';
-import moment from 'moment';
+import React, {Component} from 'react'
+import DayPicker, { DateUtils } from 'react-day-picker'
+import Kronos from 'react-kronos'
+import moment from 'moment'
 
 export default class DatesForm extends Component {
    constructor(props) {
@@ -10,7 +11,6 @@ export default class DatesForm extends Component {
 
   handleClick() {
     this.setState({ calendarOpen: !this.state.calendarOpen })
-    console.log(this.state.calendarOpen)
   }
 
   handleDayClick(e, day, modifiers) {
@@ -42,14 +42,9 @@ export default class DatesForm extends Component {
           </span>
         </div>
         <div className="field">
-          <label>{this.props.timelabel}</label>
-          <div className="ui selection dropdown">
-            <input type="hidden" name="time" />
-            <div className="default text">From time</div>
-            <div className="menu">
-            </div>
-          </div>
-          </div>
+          <label>{ this.props.timelabel }</label>
+          <Kronos time={ this.props.time } onChange={ this.props.onChange } />
+        </div>
       </div>
     );
   }
