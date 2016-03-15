@@ -61,7 +61,7 @@ export default class FormContainer extends Component {
     var timeDO = moment(this.state.dropOffTime).format("HH:mm");
 
     $.ajax({
-      url: base+api+'&dest='+city+'&startdate='+from+'&enddate='+to+'&pickuptime='+timePU+'&dropofftime'+timeDO+'&format=jsonp',
+      url: base+api+'&dest='+city+'&startdate='+from+'&enddate='+to+'&pickuptime='+timePU+'&dropofftime='+timeDO+'&format=jsonp',
       dataType: 'jsonp',
       crossDomain: true,
       success: function(data) {
@@ -75,6 +75,7 @@ export default class FormContainer extends Component {
   }
 
   render() {
+    console.log(this.state.data)
     return (
       <div className="main">
         <div className="ui form">
