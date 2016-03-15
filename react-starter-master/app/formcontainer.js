@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
-import DayPicker, { DateUtils } from 'react-day-picker';
+import React, {Component} from 'react'
+import DayPicker, { DateUtils } from 'react-day-picker'
+import moment from 'moment'
 import CityForm from './cityform.js'
 import DatesForm from './datesform.js'
-import moment from 'moment';
 import $ from 'jquery'
 
 export default class FormContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = { city: '', from: null, to: null }
+    this.state = { city: '', from: null, to: null, pickUpTime: new Date(), dropOffTime: new Date()  }
   }
 
   getString(e) {
@@ -43,14 +43,25 @@ export default class FormContainer extends Component {
     return DateUtils.isPastDay(day);
   }
 
+  setPickUpTime(time) {
+    this.setState({ pickUpTime: time })
+  }
+
+  setDropOffTime(time) {
+    this.setState({ dropOffTime: time })
+  }
+
   searchCar(e) {
-    var base = 'http://api.hotwire.com/v1/search/car?apikey=83thkexwq5fzm59pt7kgj35y&dest=';
+    var base = 'http://api.hotwire.com/v1/search/car?apikey=';
+    var api = '83thkexwq5fzm59pt7kgj35y'
     var from = moment(this.state.from).format("L");
     var to = moment(this.state.to).format("L");
     var city = this.state.city;
+    var timePU = moment(this.state.pickUpTime).format("HH:mm");
+    var timeDO = moment(this.state.dropOffTime).format("HH:mm");
 
     $.ajax({
-      url: base+city+'&startdate='+from+'&enddate='+to+'&pickuptime=10:00&dropofftime=13:30&format=jsonp',
+      url: base+api+'&dest='+city+'&startdate='+from+'&enddate='+to+'&pickuptime='+timePU+'&dropofftime'+timeDO+'&format=jsonp',
       dataType: 'jsonp',
       crossDomain: true,
       success: function(data) {
@@ -67,17 +78,21 @@ export default class FormContainer extends Component {
     return (
       <div className="main">
         <div className="ui form">
-          <CityForm onChange={this.getString.bind(this)} />
-          <DatesForm  handleDayClick={this.handleFromClick.bind(this)}
+          <CityForm onChange={ this.getString.bind(this) } />
+          <DatesForm  handleDayClick={ this.handleFromClick.bind(this) }
                       label='Pick Up Date'
-                      timelabel='Pick Up Time'
                       date={ this.state.from }
-                      disabled={ this.calculateDisabledFrom.bind(this) } />
-          <DatesForm  handleDayClick={this.handleToClick.bind(this)}
+                      disabled={ this.calculateDisabledFrom.bind(this) }
+                      timelabel='Pick Up Time'
+                      time={ this.state.pickUpTime }
+                      onChange={ this.setPickUpTime.bind(this) } />
+          <DatesForm  handleDayClick={ this.handleToClick.bind(this) }
                       label='Drop Off Date'
                       timelabel='Drop Off Time'
-                      date={this.state.to}
-                      disabled={this.calculateDisabledTo.bind(this)}/>
+                      date={ this.state.to }
+                      disabled={ this.calculateDisabledTo.bind(this) }
+                      time={ this.state.dropOffTime }
+                      onChange={ this.setDropOffTime.bind(this) } />
         </div>
         <button className="ui primary button" onClick={this.searchCar.bind(this)}>Search</button>
       </div>
