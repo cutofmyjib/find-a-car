@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import { Router, Route, hashHistory } from 'react-router'
 import Header from './header.js'
 import FormContainer from './formcontainer.js'
+import Search from './search'
 
 class App extends Component {
   render() {
@@ -14,4 +16,9 @@ class App extends Component {
   }
 }
 
-render(<App />, document.getElementById('root'));
+render((
+  <Router history={hashHistory}>
+    <Route path="/" component={App} />
+    <Route path="search" component={Search} />
+  </Router>
+), document.getElementById("root"));
