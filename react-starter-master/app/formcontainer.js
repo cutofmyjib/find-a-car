@@ -1,14 +1,18 @@
 import React, {Component} from 'react'
+import { Router, browserHistory } from 'react-router'
 import DayPicker, { DateUtils } from 'react-day-picker'
 import moment from 'moment'
 import CityForm from './cityform.js'
 import DatesForm from './datesform.js'
-import $ from 'jquery'
 
 export default class FormContainer extends Component {
   constructor(props) {
     super(props)
     this.state = { city: '', from: null, to: null, pickUpTime: new Date(), dropOffTime: new Date()  }
+  }
+
+  static contextTypes = {
+      router: React.PropTypes.object.isRequired
   }
 
   getString(e) {
@@ -51,26 +55,20 @@ export default class FormContainer extends Component {
     this.setState({ dropOffTime: time })
   }
 
-  searchCar(e) {
-    var base = 'http://api.hotwire.com/v1/search/car?apikey=';
-    var api = '83thkexwq5fzm59pt7kgj35y'
-    var from = moment(this.state.from).format("L");
-    var to = moment(this.state.to).format("L");
+  searchCar() {
     var city = this.state.city;
-    var timePU = moment(this.state.pickUpTime).format("HH:mm");
-    var timeDO = moment(this.state.dropOffTime).format("HH:mm");
-
-    $.ajax({
-      url: base+api+'&dest='+city+'&startdate='+from+'&enddate='+to+'&pickuptime='+timePU+'&dropofftime='+timeDO+'&format=jsonp',
-      dataType: 'jsonp',
-      crossDomain: true,
-      success: function(data) {
-        console.log('success')
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error('hotwire endpoint', status, err.toString())
-      }.bind(this)
+    var dateFrom = moment(this.state.from).format("L");
+    var dateTo = moment(this.state.to).format("L");
+    var timeFrom = moment(this.state.pickUpTime).format("HH:mm");
+    var timeTo = moment(this.state.dropOffTime).format("HH:mm");
+    this.context.router.push({
+      pathname: '/search/',
+      query: {  dest: city,
+                startdate: dateFrom,
+                enddate: dateTo,
+                pickuptime: timeFrom,
+                dropofftime: timeTo
+              }
     })
   }
 
