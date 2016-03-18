@@ -4,11 +4,15 @@ import DayPicker, { DateUtils } from 'react-day-picker'
 import moment from 'moment'
 import CityForm from './cityform.js'
 import DatesForm from './datesform.js'
+import FormBlock from './form-block.js'
+import FormWide from './form-wide.js'
 
 export default class FormContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = { city: '', from: null, to: null, pickUpTime: new Date(), dropOffTime: new Date()  }
+    var defaultPU = moment().add(3, 'hours').startOf('hour').toDate()
+    var defaultDO = moment().add(1, 'day').add(3, 'hours').startOf('hour').toDate()
+    this.state = { city: '', from: defaultPU, to: defaultDO, pickUpTime: defaultPU, dropOffTime: defaultDO  }
   }
 
   static contextTypes = {
@@ -48,6 +52,7 @@ export default class FormContainer extends Component {
   }
 
   setPickUpTime(time) {
+    console.log('setpickuptime',time)
     this.setState({ pickUpTime: time })
   }
 
@@ -73,28 +78,37 @@ export default class FormContainer extends Component {
   }
 
   render() {
+    console.log('timeFrom' , this.state.pickUpTime)
+    console.log('timeTo' , this.state.dropOffTime)
     console.log(this.state.data)
     return (
-      <div className="main">
-        <div className="ui form">
-          <CityForm onChange={ this.getString.bind(this) } />
-          <DatesForm  handleDayClick={ this.handleFromClick.bind(this) }
-                      label='Pick Up Date'
-                      date={ this.state.from }
-                      disabled={ this.calculateDisabledFrom.bind(this) }
-                      timelabel='Pick Up Time'
-                      time={ this.state.pickUpTime }
-                      onChange={ this.setPickUpTime.bind(this) } />
-          <DatesForm  handleDayClick={ this.handleToClick.bind(this) }
-                      label='Drop Off Date'
-                      timelabel='Drop Off Time'
-                      date={ this.state.to }
-                      disabled={ this.calculateDisabledTo.bind(this) }
-                      time={ this.state.dropOffTime }
-                      onChange={ this.setDropOffTime.bind(this) } />
-        </div>
-        <button className="ui primary button custom-color1" onClick={ this.searchCar.bind(this) }>Search</button>
-      </div>
+      (this.props.isHome)
+        ? <FormBlock
+            getString={this.getString.bind(this)}
+            handleFromClick={this.handleFromClick.bind(this)}
+            from={this.state.from}
+            calculateDisabledFrom={this.calculateDisabledFrom.bind(this)}
+            pickUpTime={this.state.pickUpTime}
+            setPickUpTime={this.setPickUpTime.bind(this)}
+            handleToClick={this.handleToClick.bind(this)}
+            to={this.state.to}
+            calculateDisabledTo={this.calculateDisabledTo.bind(this)}
+            dropOffTime={this.state.dropOffTime}
+            setDropOffTime={this.setDropOffTime.bind(this)}
+            searchCar={this.searchCar.bind(this)} />
+        : <FormWide
+            getString={this.getString.bind(this)}
+            handleFromClick={this.handleFromClick.bind(this)}
+            from={this.state.from}
+            calculateDisabledFrom={this.calculateDisabledFrom.bind(this)}
+            pickUpTime={this.state.pickUpTime}
+            setPickUpTime={this.setPickUpTime.bind(this)}
+            handleToClick={this.handleToClick.bind(this)}
+            to={this.state.to}
+            calculateDisabledTo={this.calculateDisabledTo.bind(this)}
+            dropOffTime={this.state.dropOffTime}
+            setDropOffTime={this.setDropOffTime.bind(this)}
+            searchCar={this.searchCar.bind(this)} />
     );
   }
 }
