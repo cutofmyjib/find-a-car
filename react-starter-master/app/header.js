@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 export default class Header extends Component {
   render() {
     return (
-      <header className="darkbg">
+      <header className="customheader">
         <h1>FINDA CAR</h1>
       </header>
     );
