@@ -92,6 +92,11 @@ header {
     padding: 30px 0;
 }
 
+.gut {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
 .calendar {
     display: none;
 }
