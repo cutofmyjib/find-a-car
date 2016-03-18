@@ -4,6 +4,7 @@ export default class CityForm extends Component {
   render() {
     return (
       <div className="field">
+        <label>City</label>
         <input type="text" name="city" placeholder="San Francisco" onChange={this.props.onChange} />
       </div>
     );
