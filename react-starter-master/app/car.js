@@ -36,8 +36,6 @@ export default class Car extends Component {
   }
 
   render() {
-    console.log(this.props.CarTypeCode)
-    // var imgSrc = this.getImgSrc(this.props.CarTypeCode);
     return (
       <div className="ui card">
           <div className="image">
