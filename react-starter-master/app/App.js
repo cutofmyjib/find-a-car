@@ -10,7 +10,7 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <FormContainer />
+        <FormContainer isHome={true} />
       </div>
     );
   }
