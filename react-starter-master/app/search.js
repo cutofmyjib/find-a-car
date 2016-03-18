@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
 import { Router, browserHistory } from 'react-router'
 import $ from 'jquery'
+import Header from './header.js'
+import FormContainer from './formcontainer.js'
+import CityForm from './cityform.js'
+import Car from './car.js'
 
 export default class Search extends Component {
   constructor(props) {
@@ -41,11 +45,37 @@ export default class Search extends Component {
     this.loadResults()
   }
 
+  componentDidUpdate(prevProps) {
+    var dest = this.props.location.query.dest,
+        startdate = this.props.location.query.startdate,
+        enddate = this.props.location.query.enddate,
+        pickuptime = this.props.location.query.pickuptime,
+        dropofftime = this.props.location.query.dropofftime;
+    if (dest !== prevProps.location.query.dest
+      || startdate !== prevProps.location.query.startdate
+      || enddate !== prevProps.location.query.enddate
+      || pickuptime !== prevProps.location.query.pickuptime
+      || dropofftime !== prevProps.location.query.dropofftime) {
+
+      this.loadResults()
+    }
+  }
+
   render() {
     console.log(this.state.data)
+    if (this.state.data) {
+      var array = this.state.data.Result
+      var results = array.map(function(data){
+        return <Car {...data} />
+      })
+    }
     return (
       <div>
-        <p>search component here</p>
+        <Header />
+        <FormContainer isHome={false} />
+        <div className="ui link cards gut">
+          {results}
+        </div>
       </div>
     );
   }
