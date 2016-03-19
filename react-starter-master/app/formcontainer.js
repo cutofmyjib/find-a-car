@@ -12,7 +12,14 @@ export default class FormContainer extends Component {
     super(props)
     var defaultPU = moment().add(3, 'hours').startOf('hour').toDate()
     var defaultDO = moment().add(1, 'day').add(3, 'hours').startOf('hour').toDate()
-    this.state = { city: '', from: defaultPU, to: defaultDO, pickUpTime: defaultPU, dropOffTime: defaultDO  }
+    this.state = {
+      status: 'start',
+      city: props.city || '',
+      from: defaultPU,
+      to: defaultDO,
+      pickUpTime: defaultPU,
+      dropOffTime: defaultDO
+    }
   }
 
   static contextTypes = {
@@ -66,25 +73,26 @@ export default class FormContainer extends Component {
     var dateTo = moment(this.state.to).format("L");
     var timeFrom = moment(this.state.pickUpTime).format("HH:mm");
     var timeTo = moment(this.state.dropOffTime).format("HH:mm");
+
     this.context.router.push({
       pathname: '/search/',
-      query: {  dest: city,
+      query: {  city: city,
                 startdate: dateFrom,
                 enddate: dateTo,
                 pickuptime: timeFrom,
-                dropofftime: timeTo
+                dropofftime: timeTo,
+                status: 'loading'
               }
     })
   }
 
   render() {
-    console.log('timeFrom' , this.state.pickUpTime)
-    console.log('timeTo' , this.state.dropOffTime)
-    console.log(this.state.data)
+    console.log(this.props)
     return (
       (this.props.isHome)
         ? <FormBlock
             getString={this.getString.bind(this)}
+            city={ this.state.city }
             handleFromClick={this.handleFromClick.bind(this)}
             from={this.state.from}
             calculateDisabledFrom={this.calculateDisabledFrom.bind(this)}
@@ -98,6 +106,7 @@ export default class FormContainer extends Component {
             searchCar={this.searchCar.bind(this)} />
         : <FormWide
             getString={this.getString.bind(this)}
+            city={ this.state.city }
             handleFromClick={this.handleFromClick.bind(this)}
             from={this.state.from}
             calculateDisabledFrom={this.calculateDisabledFrom.bind(this)}
