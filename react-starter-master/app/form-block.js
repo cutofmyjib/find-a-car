@@ -7,7 +7,8 @@ export default class FormHome extends Component {
     return (
       <div className="form-block">
         <div className="ui form">
-            <CityForm onChange={ this.props.getString } />
+            <cityform   onChange={ this.props.getString }
+                        city={ this.props.city }/>
             <DatesForm  handleDayClick={ this.props.handleFromClick }
                         label='Pick Up Date'
                         date={ this.props.from }

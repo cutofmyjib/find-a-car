@@ -112,3 +112,20 @@ textarea {
     justify-content: center;
     padding: 24px;
 }
+
+    /* ========================
+        warning
+   ========================== */
+.status-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning {
+    margin: 30px;
+}
+
+.warning>div {
+    margin-bottom: 10px;
+}
