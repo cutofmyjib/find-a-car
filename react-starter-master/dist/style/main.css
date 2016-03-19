@@ -67,15 +67,30 @@ textarea {
         header
     ========================== */
 .customheader {
+    display: flex;
+    justify-content: center;
     padding: 24px;
     background: #231f20;
     margin-bottom: 30px;
 }
 
 .customheader h1 {
-    margin: 0;
+    margin: 0 0 0 12px;
     color: #fff;
     font-family: 'NTR', sans-serif;
+}
+
+.flex-row {
+    display: flex;
+}
+
+.header-icon {
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    background-image: url('findacar.png');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
     /* ========================

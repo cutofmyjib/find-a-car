@@ -4,7 +4,13 @@ export default class Header extends Component {
   render() {
     return (
       <header className="customheader">
-        <Link to='/'><h1>FINDA CAR</h1></Link>
+        <Link to='/'>
+          <span className="flex-row">
+            <span className="header-icon">
+            </span>
+            <h1>finda car</h1>
+          </span>
+        </Link>
       </header>
     );
   }
