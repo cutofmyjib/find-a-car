@@ -5,33 +5,33 @@ export default class Car extends Component {
     var base = 'https://ak-secure.hotwirestatic.com/y/static/images/car/cartypes/289x137/US/';
     switch (code) {
       case 'ECAR':
-        return base + 'econ.png'
+        return { type: 'Economy car', url: base + 'econ.png' }
       case 'CCAR':
-        return base + 'compact.png'
+        return { type: 'Compact car', url: base + 'compact.png' }
       case 'FCAR':
-        return base + 'FullSize.png'
+        return { type: 'Full-size car', url: base + 'FullSize.png' }
       case 'FFAR' || 'FRAR':
-        return base + 'FullSize_SUV.png'
+        return { type: 'Full-size SUV', url: base + 'FullSize_SUV.png' }
       case 'ICAR':
-        return base + 'Midsize.png'
+        return { type: 'Mid-size car', url: base + 'Midsize.png' }
       case 'IFAR':
-        return base + 'Midsize_SUV.png'
+        return { type: 'Mid-size SUV', url: base + 'Midsize_SUV.png' }
       case 'LCAR':
-        return base + 'Luxury.png'
+        return { type: 'Luxury car', url: base + 'Luxury.png' }
       case 'MVAR':
-        return base + 'Minivan.png'
+        return { type: 'Minivan', url: base + 'Minivan.png' }
       case 'PCAR':
-        return base + 'Premium.png'
+        return { type: 'Premium car', url: base + 'Premium.png' }
       case 'SCAR':
-        return base + 'Standard.png'
+        return { type: 'Standard car', url: base + 'Standard.png' }
       case 'SFAR':
-        return base + 'Standard_SUV_correct.png'
+        return { type: 'Standard SUV', url: base + 'Standard_SUV_correct.png' }
       case 'SPAR':
-        return base + 'Pickup.png'
+        return { type: 'Standard Pickup truck', url: base + 'Pickup.png' }
       case 'STAR':
-        return base + 'Convertible.png'
+        return { type: 'Convertible car', url: base + 'Convertible.png' }
       default:
-        return base + 'Special.png'
+        return { type: 'Mini, Wagon or Special car', url: base + 'Special.png' }
     }
   }
 
@@ -39,15 +39,16 @@ export default class Car extends Component {
     return (
       <div className="ui card">
           <div className="image">
-            <img src={this.getImgSrc(this.props.CarTypeCode)} />
+            <img src={this.getImgSrc(this.props.CarTypeCode).url} />
           </div>
           <div className="content">
-            <a className="header">{this.props.CarTypeCode}</a>
-            <div className="description">{this.props.MileageDescription}</div>
+            <a className="header">{this.getImgSrc(this.props.CarTypeCode).type}</a>
+            <div className="meta">Mileage description: {this.props.MileageDescription}</div>
+            <div className="description">Location description: <br/>{this.props.LocationDescription}</div>
           </div>
           <div className="extra content">
             <i className="dollar icon"></i>
-            {this.props.DailyRate}
+            {this.props.DailyRate} per day
           </div>
         </div>
     );
