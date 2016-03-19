@@ -7,7 +7,8 @@ export default class FormWide extends Component {
     return (
       <div className="ui form">
         <div className="fields form-wide">
-          <CityForm onChange={ this.props.getString } />
+          <CityForm onChange={ this.props.getString }
+                    city={ this.props.city } />
           <div className="field">
               <DatesForm  handleDayClick={ this.props.handleFromClick }
                           label='Pick Up Date'
