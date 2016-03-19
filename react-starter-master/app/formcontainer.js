@@ -80,8 +80,7 @@ export default class FormContainer extends Component {
                 startdate: dateFrom,
                 enddate: dateTo,
                 pickuptime: timeFrom,
-                dropofftime: timeTo,
-                status: 'loading'
+                dropofftime: timeTo
               }
     })
   }
