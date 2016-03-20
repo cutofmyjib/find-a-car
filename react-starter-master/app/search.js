@@ -3,14 +3,16 @@ import { Router, browserHistory } from 'react-router'
 import $ from 'jquery'
 import Header from './header.js'
 import FormContainer from './formcontainer.js'
-import CityForm from './cityform.js'
-import Car from './car.js'
-import Warning from './warning.js'
+import Loading from './loading.js'
+import APIError from './api-error.js'
+import WarningWrapper from './warning-wrapper.js'
+import Empty from './empty.js'
+import CarWrapper from './car-wrapper.js'
 
 export default class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { status: 'loading' };
   }
 
   loadResults() {
@@ -36,6 +38,7 @@ export default class Search extends Component {
         this.setState({ data: data, status: 'success' });
       }.bind(this),
       error: function(xhr, status, err) {
+        this.setState({ status: 'error' })
         console.error('hotwire endpoint', status, err.toString())
       }.bind(this)
     })
@@ -61,63 +64,32 @@ export default class Search extends Component {
     }
   }
 
-  render() {
-    if (this.state.status === 'success') {
-      if (this.state.data.StatusDesc !== "success") {
-        var errors = this.state.data.Errors
-        if (errors.length > 1) {
-          var errorsArr = errors.map(function(message){
-            return <Warning {...message} />
-          })
-          return (
-            <div>
-              <Header />
-              <FormContainer isHome={false} {...this.props.location.query} />
-              <div className="warning">
-                {errorsArr}
-              </div>
-            </div>
-          )
+  getComponent(state) {
+    console.log(state)
+    switch (state.status) {
+      case 'loading':
+        return <Loading />
+      case 'error':
+        return <APIError />
+      default:
+        switch (state.data.StatusCode) {
+          case '3':
+            return <WarningWrapper error={state.data.Errors} />
+          case '100':
+            return <Empty message={state.data.StatusDesc} />
+          default:
+            return <CarWrapper results={state.data.Result} {...this.props.location.query} />
         }
-        return (
-          <div>
-            <Header />
-            <FormContainer isHome={false} {...this.props.location.query} />
-            <div className="warning">
-              <Warning ErrorMessage={this.state.data.Errors.Error.ErrorMessage} />
-            </div>
-          </div>
-        )
-      }
-      var resultsArr = this.state.data.Result
-      var results = resultsArr.map(function(data){
-        return <Car {...data} />
-      })
-    } else if (this.state.status === 'loading') {
-      return (
-        <div>
-          <Header />
-          <FormContainer isHome={false} {...this.props.location.query} />
-          <div className="status-div">
-            <div className="ui active inverted dimmer">
-              <div className="ui large text loader">Loading</div>
-            </div>
-          </div>
-        </div>
-      )
     }
+  }
+
+  render() {
+    var component = this.getComponent(this.state);
     return (
       <div>
         <Header />
         <FormContainer isHome={false} {...this.props.location.query} />
-        <div className="status-div">
-          <div className="ui green message">
-            <p>Here are your search results for {this.props.location.query.city}, pick up day {this.props.location.query.startdate} at {this.props.location.query.pickuptime} and drop off date {this.props.location.query.enddate} at {this.props.location.query.dropofftime} </p>
-          </div>
-        </div>
-        <div className="ui link cards gut">
-          {results}
-        </div>
+        {component}
       </div>
     );
   }

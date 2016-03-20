@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 
-export default class Warning extends Component {
+export default class Empty extends Component {
   render() {
     return (
-      <div className="ui purple message">
-        <div className="header">
+      <div className="status-div">
+        <div className="ui green message">
           {this.props.message}
         </div>
       </div>

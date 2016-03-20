@@ -138,14 +138,8 @@ textarea {
    ========================== */
 .status-div {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.warning {
-    margin: 30px;
-}
-
-.warning>div {
-    margin-bottom: 10px;
+    margin: 5px 0;
 }
