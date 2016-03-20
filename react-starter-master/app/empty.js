@@ -5,7 +5,9 @@ export default class Empty extends Component {
     return (
       <div className="status-div">
         <div className="ui green message">
-          {this.props.message}
+          <div className="header">
+            {this.props.message}
+          </div>
         </div>
       </div>
     )
