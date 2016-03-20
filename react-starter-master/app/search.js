@@ -18,7 +18,7 @@ export default class Search extends Component {
   loadResults() {
     this.setState({ status: 'loading' })
 
-    var base = 'http://api.hotwire.com/v1/search/car'
+    var base = 'https://api.hotwire.com/v1/search/car'
     var api = '83thkexwq5fzm59pt7kgj35y'
 
     $.ajax({
@@ -65,13 +65,12 @@ export default class Search extends Component {
   }
 
   getComponent(state) {
-    console.log(state)
     switch (state.status) {
       case 'loading':
         return <Loading />
       case 'error':
         return <APIError />
-      default:
+      case 'success':
         switch (state.data.StatusCode) {
           case '3':
             return <WarningWrapper error={state.data.Errors} />
