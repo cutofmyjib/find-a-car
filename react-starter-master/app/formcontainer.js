@@ -45,9 +45,6 @@ export default class FormContainer extends Component {
 
   //isPastDay(d: date) -> bool (from DateUtils)
   calculateDisabledFrom(day) {
-    if (this.state.to) {
-      return day >= this.state.to || DateUtils.isPastDay(day);
-    }
     return DateUtils.isPastDay(day);
   }
 
