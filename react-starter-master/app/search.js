@@ -5,6 +5,7 @@ import Header from './header.js'
 import FormContainer from './formcontainer.js'
 import Loading from './loading.js'
 import APIError from './api-error.js'
+import SystemError from './system-error.js'
 import WarningWrapper from './warning-wrapper.js'
 import Empty from './empty.js'
 import CarWrapper from './car-wrapper.js'
@@ -72,6 +73,8 @@ export default class Search extends Component {
         return <APIError />
       case 'success':
         switch (state.data.StatusCode) {
+          case '2':
+            return <SystemError message={state.data.StatusDesc} />
           case '3':
             return <WarningWrapper error={state.data.Errors} />
           case '100':
