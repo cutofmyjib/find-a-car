@@ -59,7 +59,6 @@ export default class FormContainer extends Component {
   }
 
   setPickUpTime(time) {
-    console.log('setpickuptime',time)
     this.setState({ pickUpTime: time })
   }
 
