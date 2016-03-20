@@ -23,7 +23,7 @@ export default class FormContainer extends Component {
   }
 
   static contextTypes = {
-      router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired
   }
 
   getString(e) {
@@ -86,37 +86,24 @@ export default class FormContainer extends Component {
   }
 
   render() {
-    console.log(this.props)
+    var props = {
+      getString: this.getString.bind(this),
+      city:  this.state.city,
+      handleFromClick: this.handleFromClick.bind(this),
+      from: this.state.from,
+      calculateDisabledFrom: this.calculateDisabledFrom.bind(this),
+      pickUpTime: this.state.pickUpTime,
+      setPickUpTime: this.setPickUpTime.bind(this),
+      handleToClick: this.handleToClick.bind(this),
+      to: this.state.to,
+      calculateDisabledTo: this.calculateDisabledTo.bind(this),
+      dropOffTime: this.state.dropOffTime,
+      setDropOffTime: this.setDropOffTime.bind(this),
+      searchCar: this.searchCar.bind(this)
+    }
+
     return (
-      (this.props.isHome)
-        ? <FormBlock
-            getString={this.getString.bind(this)}
-            city={ this.state.city }
-            handleFromClick={this.handleFromClick.bind(this)}
-            from={this.state.from}
-            calculateDisabledFrom={this.calculateDisabledFrom.bind(this)}
-            pickUpTime={this.state.pickUpTime}
-            setPickUpTime={this.setPickUpTime.bind(this)}
-            handleToClick={this.handleToClick.bind(this)}
-            to={this.state.to}
-            calculateDisabledTo={this.calculateDisabledTo.bind(this)}
-            dropOffTime={this.state.dropOffTime}
-            setDropOffTime={this.setDropOffTime.bind(this)}
-            searchCar={this.searchCar.bind(this)} />
-        : <FormWide
-            getString={this.getString.bind(this)}
-            city={ this.state.city }
-            handleFromClick={this.handleFromClick.bind(this)}
-            from={this.state.from}
-            calculateDisabledFrom={this.calculateDisabledFrom.bind(this)}
-            pickUpTime={this.state.pickUpTime}
-            setPickUpTime={this.setPickUpTime.bind(this)}
-            handleToClick={this.handleToClick.bind(this)}
-            to={this.state.to}
-            calculateDisabledTo={this.calculateDisabledTo.bind(this)}
-            dropOffTime={this.state.dropOffTime}
-            setDropOffTime={this.setDropOffTime.bind(this)}
-            searchCar={this.searchCar.bind(this)} />
+      (this.props.blockFormat) ? <FormBlock { ...props } /> : <FormWide { ...props } />
     );
   }
 }
