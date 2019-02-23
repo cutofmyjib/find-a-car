@@ -19,12 +19,15 @@ export default class Search extends Component {
   loadResults() {
     this.setState({ status: 'loading' })
 
-    var base = 'https://api.hotwire.com/v1/search/car'
+    // var base = 'https://api.hotwire.com/v1/search/car'
+    // hotwire stopped supporting CORS
+    // use https://github.com/danasilver/hotwire for CORS wrapper
+    var base = 'https://hotwire.herokuapp.com/v1/search/car'
     var api = '83thkexwq5fzm59pt7kgj35y'
 
     $.ajax({
       url: base,
-      dataType: 'jsonp',
+      dataType: 'json',
       crossDomain: true,
       data: {
         dest: this.props.location.query.city,
@@ -32,7 +35,7 @@ export default class Search extends Component {
         enddate: this.props.location.query.enddate,
         pickuptime: this.props.location.query.pickuptime,
         dropofftime: this.props.location.query.dropofftime,
-        format: 'jsonp',
+        format: 'json',
         apikey: api
       },
       success: function(data) {
